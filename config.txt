@@ -3,18 +3,18 @@
 [NEAT]
 fitness_criterion     = max
 fitness_threshold     = 500
-pop_size              = 25          #Change after a test run
+pop_size              = 25
 reset_on_extinction   = True
 
 
 [DefaultGenome]
-# node activation options
-activation_default      = elu
+# node activation options implement own selu and leaky relu activation functions
+activation_default      = tanh
 activation_mutate_rate  = 0.2
-activation_options      = cube selu elu tanh
+activation_options      = cube tanh
 
 # node aggregation options
-aggregation_default     = sum       #Change later (mean)
+aggregation_default     = sum
 aggregation_mutate_rate = 0.0
 aggregation_options     = sum
 
@@ -44,13 +44,13 @@ initial_connection      = partial_nodirect 0.5
 #initial_connection     = full
 
 # node add/remove rates
-node_add_prob           = 0.5       #defualt 0.2
+node_add_prob           = 0.5
 node_delete_prob        = 0.2
 
 # network parameters  #game input parameters //TODO
 num_hidden              = 0
-num_inputs              = 64
-num_outputs             = 1
+num_inputs              = 3
+num_outputs             = 3
 
 # node response options  ##change later
 response_init_mean      = 1.0
@@ -71,14 +71,14 @@ weight_mutate_rate      = 0.8
 weight_replace_rate     = 0.1
 
 [DefaultSpeciesSet]
-compatibility_threshold = 3 # decrease on species increase
+compatibility_threshold = 3
 
 [DefaultStagnation]
-species_fitness_func = max     # Try max
+species_fitness_func = max
 max_stagnation       = 20
 species_elitism      = 1
 
 [DefaultReproduction]
 elitism            = 3
 survival_threshold = 0.3
-min_species_size = 2           # Default 2
+min_species_size = 2

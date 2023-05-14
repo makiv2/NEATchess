@@ -1,9 +1,8 @@
 # This is a sample Python script.
 import os.path
 
-import chess
 import neat
-from chess import BB_SQUARES, WHITE, PAWN
+import neat.activations
 
 from const import *
 from fitness import evaluate_population
@@ -40,16 +39,7 @@ def run(config_file):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    local_dir = os.path.dirname(__file__)
+    config_path = os.path.join(local_dir, 'config.txt')
 
-    from bitboard import board_to_bitboard
-
-    board = chess.Board()
-
-    board_to_bitboard(board)
-
-    # local_dir = os.path.dirname(__file__)
-    # config_path = os.path.join(local_dir, 'config.txt')
-
-    # run(config_path)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    run(config_path)
