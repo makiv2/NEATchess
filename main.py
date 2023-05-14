@@ -41,23 +41,15 @@ def run(config_file):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    from bitboard import create_bitboard_from_board
+    from bitboard import board_to_bitboard
 
     board = chess.Board()
-    print(board)
 
-    print(create_bitboard_from_board(board))
+    board_to_bitboard(board)
 
+    # local_dir = os.path.dirname(__file__)
+    # config_path = os.path.join(local_dir, 'config.txt')
 
-
-
-
-
-
-
-    #local_dir = os.path.dirname(__file__)
-    #config_path = os.path.join(local_dir, 'config.txt')
-
-    #run(config_path)
+    # run(config_path)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

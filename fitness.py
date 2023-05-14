@@ -10,3 +10,7 @@ def evaluate_population(genomes, config):
             genome2.fitness = 0 if genome2.fitness is None else genome2.fitness
             # Initialize game
             train_ai(genome1, genome2, config)
+
+
+def calculate_fitness(genome1, genome2, game_info):
+    pass
