@@ -1,2 +1,3 @@
 chess==1.9.4
 neat-python==0.92
+numpy~=1.24.3

@@ -1,4 +1,5 @@
 import chess
+import numpy as np
 
 
 def board_to_bitboard(board_state):
@@ -16,3 +17,15 @@ def bitboard_to_params(bitboard):
         for color in chess.COLORS:
             params.append(bitboard[piece_type, color])
     return params
+
+
+def flatten_bitboards(bitboards):
+    bitmaps = []
+    for bitboard in bitboards:
+        bitmaps.append(np.array(list(bitboards[bitboard]), dtype=np.uint8))
+    bitvector = np.concatenate(bitmaps)
+    return bitvector
+
+
+
+

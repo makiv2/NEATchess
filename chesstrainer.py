@@ -1,6 +1,6 @@
 import chess.engine
 import neat
-from bitboard import board_to_bitboard
+from bitboard import board_to_bitboard, flatten_bitboards
 
 
 def train_ai(genome1, genome2, config):
@@ -10,23 +10,20 @@ def train_ai(genome1, genome2, config):
 
     # Create the chess board
     board = chess.Board()
-    bitboard = board_to_bitboard(board)
 
-    wp = int(bitboard[1, True])
-    bp = int(bitboard[1, False])
-    wn = int(bitboard[2, True])
-    bn = int(bitboard[2, False])
-    wb = int(bitboard[3, True])
-    bb = int(bitboard[3, False])
+    bitboards = board_to_bitboard(board)
+    bitvector = flatten_bitboards(bitboards)
+
+    # add 5 helper nodes to the input layer, number of moves made, castle rights, el passant square, possbile legal moves, piece values, positional values, game phase, opponents last moves and legal moves.=
 
     # Play the game
     while not board.is_game_over():
 
         # Determine whose turn it is
         if board.turn == chess.WHITE:
-            output = net1.activate((wp, wn, wb))
+            output = net1.activate(bitvector)
         else:
-            output = net2.activate((bp, bn, bb))
+            output = net2.activate(bitvector)
         print(output)
 
         # Get the legal moves for the current player
