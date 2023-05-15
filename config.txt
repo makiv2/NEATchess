@@ -49,8 +49,8 @@ node_delete_prob        = 0.2
 
 # network parameters  #game input parameters //TODO
 num_hidden              = 0
-num_inputs              = 35
-num_outputs             = 3
+num_inputs              = 896
+num_outputs             = 128
 
 # node response options  ##change later
 response_init_mean      = 1.0
