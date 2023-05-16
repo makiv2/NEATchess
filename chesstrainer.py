@@ -2,7 +2,8 @@ import chess.engine
 import neat
 import numpy as np
 
-from bitboard import board_to_bitboard, flatten_bitboards, board_to_3vector
+from bitboard import board_to_3vector
+from encoder import interpret_output
 
 
 def train_ai(genome1, genome2, config):
@@ -23,6 +24,10 @@ def train_ai(genome1, genome2, config):
         # Determine whose turn it is
         if board.turn == chess.WHITE:
             output = net1.activate(vector)
+            print(interpret_output(output))
+            print(board.legal_moves)
+
+
             board.push_san(board.legal_moves[interpret_output(output, board)])
         else:
             output = net2.activate(vector)
@@ -39,6 +44,4 @@ def train_ai(genome1, genome2, config):
     # Update the fitness of the genomes
 
 
-def interpret_output(output, board):
-    action_index = np.argmax(output)
-    return action_index
+

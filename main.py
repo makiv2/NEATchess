@@ -5,6 +5,7 @@ import neat
 import neat.activations
 
 from const import *
+from encoder import *
 from fitness import evaluate_population
 
 
@@ -39,6 +40,7 @@ def run(config_file):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
     local_dir = os.path.dirname(__file__)
     config_path = os.path.join(local_dir, 'config.txt')
 

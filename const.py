@@ -1,3 +1,5 @@
+from generator import *
+
 # Screen dimensions
 WIDTH = 800
 HEIGHT = 800
@@ -12,3 +14,6 @@ GENERATIONS = 300
 
 # Stockfish params
 DEPTH = 15
+
+# CodeMaps
+MOVEMAP = generate_codes()

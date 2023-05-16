@@ -8,7 +8,7 @@ def evaluate_population(genomes, config):
         genome1.fitness = 0
         for genome_id2, genome2 in genomes[i + 1:]:
             genome2.fitness = 0 if genome2.fitness is None else genome2.fitness
-            # Initialize game
+            # Train two and two genomes against each other
             train_ai(genome1, genome2, config)
 
 
