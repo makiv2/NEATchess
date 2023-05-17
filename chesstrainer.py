@@ -3,7 +3,7 @@ import neat
 import numpy as np
 
 from bitboard import board_to_3vector
-from encoder import interpret_output
+from encoder import *
 
 
 def train_ai(genome1, genome2, config):
@@ -24,14 +24,14 @@ def train_ai(genome1, genome2, config):
         # Determine whose turn it is
         if board.turn == chess.WHITE:
             output = net1.activate(vector)
-            print(interpret_output(output))
-            print(board.legal_moves)
 
 
-            board.push_san(board.legal_moves[interpret_output(output, board)])
+
         else:
             output = net2.activate(vector)
-            board.push_san(board.legal_moves[interpret_output(output, board)])
+
+
+
 
         # Get the legal moves for the current player
         legal_moves = list(board.legal_moves)
@@ -44,4 +44,8 @@ def train_ai(genome1, genome2, config):
     # Update the fitness of the genomes
 
 
+def get_move_type(data):
+
+    # Calculate which move the AI wants to make
+    pass
 

@@ -14,3 +14,10 @@ def evaluate_population(genomes, config):
 
 def calculate_fitness(genome1, genome2, game_info):
     pass
+
+
+def is_move_legal():
+    pass
+
+def evaluate_move():
+    pass
