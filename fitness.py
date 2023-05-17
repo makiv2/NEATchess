@@ -23,9 +23,4 @@ def is_move_legal():
     pass
 
 
-def evaluate_pick_up_square_probabilities(board, priorities, genome):
-    for i in priorities:
-        if board.piece_at(i) and board.piece_at(i).color == board.turn:
-            return i
-        else:
-            genome.fitness -= 1
+
