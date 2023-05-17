@@ -2,7 +2,7 @@ from const import MOVEMAP
 import numpy as np
 
 
-def get_move_type(output_tensor):
+def get_move_type_probability(output_tensor):
     means = []
     num_sets = len(output_tensor) // 64  # Calculate the number of sets of 72 elements
 
@@ -19,7 +19,12 @@ def get_valid_moves(board, output_tensor):
     pass
 
 
-def get_move_priorities(output):
+def get_piece_to_move_priorities_to_indexes(move_priorities):
+    indices_sorted = sorted(range(64), key=lambda i: move_priorities[i], reverse=True)[:64]
+    return indices_sorted
+
+
+def get_what_piece_to_move_priorities(output):
     arrays = [[] for _ in range(64)]
     means = []
 
@@ -37,6 +42,5 @@ def get_move_priorities(output):
     return means
 
 
-def select_move(move_probabilities):
+def move_probability_to_move(move_probabilities):
     pass
-

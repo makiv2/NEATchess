@@ -1,3 +1,4 @@
+from bitboard import board_to_bitboard
 from chesstrainer import train_ai
 
 
@@ -10,6 +11,8 @@ def evaluate_population(genomes, config):
             genome2.fitness = 0 if genome2.fitness is None else genome2.fitness
             # Train two and two genomes against each other
             train_ai(genome1, genome2, config)
+            break
+        break
 
 
 def calculate_fitness(genome1, genome2, game_info):
@@ -19,5 +22,10 @@ def calculate_fitness(genome1, genome2, game_info):
 def is_move_legal():
     pass
 
-def evaluate_move():
-    pass
+
+def evaluate_pick_up_square_probabilities(board, priorities, genome):
+    for i in priorities:
+        if board.piece_at(i) and board.piece_at(i).color == board.turn:
+            return i
+        else:
+            genome.fitness -= 1

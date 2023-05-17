@@ -4,6 +4,7 @@ import numpy as np
 
 from bitboard import board_to_3vector
 from encoder import *
+from fitness import *
 
 
 def train_ai(genome1, genome2, config):
@@ -21,17 +22,25 @@ def train_ai(genome1, genome2, config):
     # Play the game
     while not board.is_game_over():
 
+
         # Determine whose turn it is
         if board.turn == chess.WHITE:
             output = net1.activate(vector)
+
+            moves = get_what_piece_to_move_priorities(output)
+            priorities = get_piece_to_move_priorities_to_indexes(moves)
+
+            pick_up_piece_at_index = evaluate_pick_up_square_probabilities(board, priorities, genome1)
+
+            print("Move the piece at index: ", pick_up_piece_at_index)
+            print('The piece to move is: ', board.piece_at(pick_up_piece_at_index))
+
+            break
 
 
 
         else:
             output = net2.activate(vector)
-
-
-
 
         # Get the legal moves for the current player
         legal_moves = list(board.legal_moves)
@@ -45,7 +54,5 @@ def train_ai(genome1, genome2, config):
 
 
 def get_move_type(data):
-
     # Calculate which move the AI wants to make
     pass
-
