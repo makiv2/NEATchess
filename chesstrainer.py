@@ -4,7 +4,7 @@ import numpy as np
 
 from bitboard import board_to_3vector
 from encoder import *
-from fitness import *
+from const import MOVEMAP
 
 
 def train_ai(genome1, genome2, config):
@@ -33,9 +33,6 @@ def train_ai(genome1, genome2, config):
             print('Checkpoint 3')
             pick_up_piece_at_index = evaluate_pick_up_square_probabilities(board, priorities, genome1)
 
-            print("Move the piece at index: ", pick_up_piece_at_index)
-            print('The piece to move is: ', board.piece_at(pick_up_piece_at_index))
-
             break
 
 
@@ -54,14 +51,29 @@ def train_ai(genome1, genome2, config):
     # Update the fitness of the genomes
 
 
-def get_move_type(data):
-    # Calculate which move the AI wants to make
-    pass
-
-
 def evaluate_pick_up_square_probabilities(board, priorities, genome):
     for i in priorities:
         if board.piece_at(i) and board.piece_at(i).color == board.turn:
             return i
         else:
             genome.fitness -= 1
+
+
+def get_move_type(data):
+    moves_to_make = []
+    move_type_probabilities = get_move_type_probability(data)
+    indexes_to_which_move_in_move_map = sorted(range(len(move_type_probabilities)), key=lambda i: move_type_probabilities[i], reverse=True)
+
+    print(MOVEMAP)  #map index to movemap
+
+    return indexes_to_which_move_in_move_map
+
+
+def simple_fitness_eval(board, genome1, genome2):
+    if board.is_checkmate:
+        if board.turn == chess.BLACK:
+            genome1.fitness *= 1.5
+            genome2.fitness *= 0.8
+        else:
+            genome1.fitness *= 1.5
+            genome2.fitness *= 0.8
