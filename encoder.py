@@ -40,7 +40,3 @@ def get_what_piece_to_move_priorities(output):
         means.append(mean)
 
     return means
-
-
-def move_probability_to_move(move_probabilities):
-    pass
