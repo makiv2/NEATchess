@@ -5,40 +5,46 @@ import numpy as np
 from bitboard import board_to_3vector
 from encoder import *
 from const import MOVEMAP
+from decoder import *
+from helpers import *
 
 
 def train_ai(genome1, genome2, config):
     # Create the neural networks
-    print('Checkpoint 0.5')
     net1 = neat.nn.FeedForwardNetwork.create(genome1, config)
     net2 = neat.nn.FeedForwardNetwork.create(genome2, config)
 
     # Create the chess board
     board = chess.Board()
 
-    vector = board_to_3vector(board)
+    # Encode the board to a input vector
+    board_vector = board_to_3vector(board)
 
-    # add 5 helper nodes to the input layer, number of moves made, castle rights, el passant square, possbile legal moves, piece values, positional values, game phase, opponents last moves and legal moves.=
-    print('Checkpoint 0.7')
     # Play the game
     while not board.is_game_over():
 
-        # Determine whose turn it is
         if board.turn == chess.WHITE:
-            output = net1.activate(vector)
-            print('Checkpoint 1')
-            moves = get_what_piece_to_move_priorities(output)
-            print('Checkpoint 2')
-            priorities = get_piece_to_move_priorities_to_indexes(moves)
-            print('Checkpoint 3')
-            pick_up_piece_at_index = evaluate_pick_up_square_probabilities(board, priorities, genome1)
+
+            # Get output for the white pieces
+            output = net1.activate(board_vector)
+
+            # Get moves
+            moves = get_moves(output)
+
+            # Find a valid move
+            move = find_valid_move(board, moves)
+
+            make_move(board, move)
+
+            print('Made first move')
+            print(board)
 
             break
 
 
 
         else:
-            output = net2.activate(vector)
+            output = net2.activate(board_vector)
 
         # Get the legal moves for the current player
         legal_moves = list(board.legal_moves)
@@ -59,14 +65,15 @@ def evaluate_pick_up_square_probabilities(board, priorities, genome):
             genome.fitness -= 1
 
 
-def get_move_type(data):
-    moves_to_make = []
-    move_type_probabilities = get_move_type_probability(data)
-    indexes_to_which_move_in_move_map = sorted(range(len(move_type_probabilities)), key=lambda i: move_type_probabilities[i], reverse=True)
-
-    print(MOVEMAP)  #map index to movemap
-
-    return indexes_to_which_move_in_move_map
+# def get_move_type(data):
+#     moves_to_make = []
+#     move_type_probabilities = get_move_type_probability(data)
+#     indexes_to_which_move_in_move_map = sorted(range(len(move_type_probabilities)),
+#                                                key=lambda i: move_type_probabilities[i], reverse=True)
+#
+#     print(MOVEMAP)  # map index to movemap
+#
+#     return indexes_to_which_move_in_move_map
 
 
 def simple_fitness_eval(board, genome1, genome2):
@@ -77,3 +84,23 @@ def simple_fitness_eval(board, genome1, genome2):
         else:
             genome1.fitness *= 1.5
             genome2.fitness *= 0.8
+
+
+def is_move_legal(board, move):
+    if move in board.legal_moves:
+        return True
+    else:
+        return False
+
+
+def find_valid_move(board, moves):
+    print(moves)
+    for move in moves:
+
+        temp = create_move(move, moves[move])
+        if is_move_legal(board, temp):
+            return temp
+
+
+def make_move(board, move):
+    pass
