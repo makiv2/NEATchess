@@ -4,6 +4,8 @@ import neat
 from bitboard import board_to_3vector
 from decoder import *
 from helpers import *
+from chessboard import display
+from time import sleep
 
 
 def train_ai(genome1, genome2, config):
@@ -12,13 +14,17 @@ def train_ai(genome1, genome2, config):
     net2 = neat.nn.FeedForwardNetwork.create(genome2, config)
 
     # Create the chess board
+    print('creating board')
     board = chess.Board()
 
-    # Encode the board to an input vector
-    board_vector = board_to_3vector(board)
+    board_display = display.start(board.fen())
+
+    input('press enter to continue')
 
     # Play the game
     while not board.is_game_over():
+
+        board_vector = board_to_3vector(board)
 
         if board.turn == chess.WHITE:
 
@@ -28,28 +34,38 @@ def train_ai(genome1, genome2, config):
             # Get moves
             moves = get_moves(output)
 
-            print('This is the moves ', moves)
+            # Find a valid move
+            move = find_valid_move(board, moves)
+
+            make_move(board, move)
+
+            display.update(board.fen(), board_display)
+            sleep(1)
+            print('white MOVE MADE')
+            print(board)
+        else:
+            # Get output for the white pieces
+            output = net2.activate(board_vector)
+
+            # Get moves
+            moves = get_moves(output)
 
             # Find a valid move
             move = find_valid_move(board, moves)
 
             make_move(board, move)
 
-            print('Made first move')
+            print('black MOVE MADE')
             print(board)
-
-            exit(10)
-
-
-
-        else:
-            output = net2.activate(board_vector)
+            display.update(board.fen(), board_display)
+            sleep(1)
 
         # Get the legal moves for the current player
         legal_moves = list(board.legal_moves)
 
         # If there are no legal moves, the game is over
         if len(legal_moves) == 0:
+            display.terminate()
             break
 
     # Return the winner
@@ -94,21 +110,14 @@ def is_move_legal(board, move_obj):
 
 def find_valid_move(board, moves):
     for square_index, move_instruction in moves:
-        print('Trying to move piece on square index: ', square_index, ' with instruction: ', move_instruction)
-
+        # LOG the failed moves to fitness
         move_string = create_move_string(square_index, move_instruction)
-
-        print('Move string: ', move_string)
 
         # Check string validity
         if not check_string_validity(move_string):
-            print('Move string is not valid')
             continue
-        print('Move string is valid', move_string)
-
         # Create move object
         move_obj = create_move_object(move_string)
-
         # Make legal move object
 
         if is_move_legal(board, move_obj):

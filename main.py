@@ -9,6 +9,8 @@ from bitboard import board_to_bitboard, board_to_3vector
 from const import *
 from encoder import *
 from fitness import evaluate_population
+from chessboard import display
+from time import sleep
 
 
 def run(config_file):

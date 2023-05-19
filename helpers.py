@@ -75,7 +75,6 @@ def create_move_string(square_index, move_instruction):
             number -= amount[1]
             letter = chr(ord(letter) - amount[0])
 
-
     destination_square = letter + str(number)
     move = square_name + destination_square
 
@@ -84,6 +83,6 @@ def create_move_string(square_index, move_instruction):
 
 def index_to_square_converter(index):
     file = index % 8
-    rank = (index // 8)+1
+    rank = (index // 8) + 1
     file_letter = chr(file + ord('a'))
     return file_letter + str(rank)
