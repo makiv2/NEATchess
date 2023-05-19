@@ -8,7 +8,6 @@ def index_output(output):
 
 def decode_move_from_index(index_array):
     moves = {}
-    index_array = [5, 64, 126, 77, 4, 5, 6, 7]
     movemap = {v: k for k, v in MOVEMAP.items()}
 
     for i in index_array:

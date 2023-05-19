@@ -92,13 +92,17 @@ def is_move_legal(board, move_obj):
 
 def find_valid_move(board, moves):
     for move in moves:
+        print('Trying: ', move, ' with value: ', moves[move])
+
         move_string = create_move_string(move, moves[move])
 
         print(move_string)
+        if not check_string_validity(move_string):
+            continue
 
         move_obj = create_move_object(move_string)
 
-        print(move_obj)
+        print('Found a legal move: ', is_move_legal(board, move_obj))
 
         if is_move_legal(board, move_obj):
             return move_obj
@@ -110,3 +114,14 @@ def create_move_object(move):
 
 def make_move(board, move):
     board.push_uci(move)
+
+
+def check_string_validity(move_string):
+    letter = move_string[2]
+    number = move_string[3]
+
+    if letter in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] and number in ['1', '2', '3', '4', '5', '6', '7', '8']:
+        return True
+    else:
+        return False
+
