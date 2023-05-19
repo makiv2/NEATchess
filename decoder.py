@@ -7,17 +7,17 @@ def index_output(output):
 
 
 def decode_move_from_index(index_array):
-    moves = {}
+    moves = []
     movemap = {v: k for k, v in MOVEMAP.items()}
 
     print(index_array)
     print(movemap)
+
     for i in index_array:
 
         move_group = i // 64
         square_index = i % 64
-        moves[square_index] = movemap[move_group]
-        #print('The index element: ', i, 'is in the move group: ', move_group, 'and the square index is: ', square_index)
+        moves.append((square_index, movemap[move_group]))
     print(moves)
 
     return moves

@@ -28,6 +28,8 @@ def train_ai(genome1, genome2, config):
             # Get moves
             moves = get_moves(output)
 
+            print('This is the moves ', moves)
+
             # Find a valid move
             move = find_valid_move(board, moves)
 
@@ -36,7 +38,7 @@ def train_ai(genome1, genome2, config):
             print('Made first move')
             print(board)
 
-            break
+            exit(10)
 
 
 
@@ -91,21 +93,29 @@ def is_move_legal(board, move_obj):
 
 
 def find_valid_move(board, moves):
-    for move in moves:
-        print('Trying: ', move, ' with value: ', moves[move])
+    for square_index, move_instruction in moves:
+        print('Trying to move piece on square index: ', square_index, ' with instruction: ', move_instruction)
 
-        move_string = create_move_string(move, moves[move])
+        move_string = create_move_string(square_index, move_instruction)
 
-        print(move_string)
+        print('Move string: ', move_string)
+
+        # Check string validity
         if not check_string_validity(move_string):
+            print('Move string is not valid')
             continue
+        print('Move string is valid', move_string)
 
+        # Create move object
         move_obj = create_move_object(move_string)
 
-        print('Found a legal move: ', is_move_legal(board, move_obj))
+        # Make legal move object
 
         if is_move_legal(board, move_obj):
+            print('Move is legal and valid', move_obj)
             return move_obj
+
+    print('No valid move found')
 
 
 def create_move_object(move):
@@ -113,15 +123,15 @@ def create_move_object(move):
 
 
 def make_move(board, move):
-    board.push_uci(move)
+    board.push(move)
 
 
 def check_string_validity(move_string):
     letter = move_string[2]
     number = move_string[3]
 
-    if letter in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] and number in ['1', '2', '3', '4', '5', '6', '7', '8']:
+    if letter in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] and number in ['1', '2', '3', '4', '5', '6', '7',
+                                                                         '8'] and len(move_string) == 4:
         return True
     else:
         return False
-
