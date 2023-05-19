@@ -47,6 +47,6 @@ def create_move_string(initial_square_index, increments):
 
 def index_to_square_converter(index):
     file = index % 8
-    rank = 8 - index // 8
+    rank = index // 8
     file_letter = chr(file + ord('a'))
     return file_letter + str(rank)
