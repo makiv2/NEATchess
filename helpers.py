@@ -1,14 +1,11 @@
+def create_move_string(initial_square_index, increments):
+    square_name = index_to_square_converter(initial_square_index)
 
-
-def create_move(initial_square, increments):
-
-    letter = initial_square[0]
-    number = initial_square[1]
+    letter = square_name[0]
+    number = int(square_name[1])
 
     direction = increments[1]
-    amount = increments[0]
-    final_square = ''
-
+    amount = int(increments[0])
 
     if isinstance(amount, int):
         if direction == 'N':
@@ -39,10 +36,17 @@ def create_move(initial_square, increments):
             number += amount
             letter = chr(ord(letter) - amount)
 
-    else:
-        print('Move a fucking knight')
+        else:
+            print('Move a knight')
 
-    destination_square = letter+number
-    move = initial_square+destination_square
+    destination_square = letter + str(number)
+    move = square_name + destination_square
 
     return move
+
+
+def index_to_square_converter(index):
+    file = index % 8
+    rank = 8 - index // 8
+    file_letter = chr(file + ord('a'))
+    return file_letter + str(rank)

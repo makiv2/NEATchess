@@ -1,10 +1,7 @@
 import chess.engine
 import neat
-import numpy as np
 
 from bitboard import board_to_3vector
-from encoder import *
-from const import MOVEMAP
 from decoder import *
 from helpers import *
 
@@ -17,7 +14,7 @@ def train_ai(genome1, genome2, config):
     # Create the chess board
     board = chess.Board()
 
-    # Encode the board to a input vector
+    # Encode the board to an input vector
     board_vector = board_to_3vector(board)
 
     # Play the game
@@ -86,21 +83,30 @@ def simple_fitness_eval(board, genome1, genome2):
             genome2.fitness *= 0.8
 
 
-def is_move_legal(board, move):
-    if move in board.legal_moves:
+def is_move_legal(board, move_obj):
+    if move_obj in board.legal_moves:
         return True
     else:
         return False
 
 
 def find_valid_move(board, moves):
-    print(moves)
     for move in moves:
+        move_string = create_move_string(move, moves[move])
 
-        temp = create_move(move, moves[move])
-        if is_move_legal(board, temp):
-            return temp
+        print(move_string)
+
+        move_obj = create_move_object(move_string)
+
+        print(move_obj)
+
+        if is_move_legal(board, move_obj):
+            return move_obj
+
+
+def create_move_object(move):
+    return chess.Move.from_uci(move)
 
 
 def make_move(board, move):
-    pass
+    board.push_uci(move)
