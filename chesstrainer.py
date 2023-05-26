@@ -99,6 +99,17 @@ def simple_fitness_eval(board, genome1, genome2):
         else:
             genome1.fitness *= 1.5
             genome2.fitness *= 0.8
+    advanced_fitness_eval(board, genome1, genome2)
+
+
+
+
+
+
+
+
+def advanced_fitness_eval(board, genome1, genome2):
+    pass
 
 
 def is_move_legal(board, move_obj):
