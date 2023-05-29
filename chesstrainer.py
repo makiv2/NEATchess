@@ -14,12 +14,10 @@ def train_ai(genome1, genome2, config):
     net2 = neat.nn.FeedForwardNetwork.create(genome2, config)
 
     # Create the chess board
-    print('creating board')
     board = chess.Board()
 
-    board_display = display.start(board.fen())
-
-    input('press enter to continue')
+    # Visualize the board
+    # board_display = display.start(board.fen())
 
     # Play the game
     while not board.is_game_over():
@@ -39,10 +37,9 @@ def train_ai(genome1, genome2, config):
 
             make_move(board, move)
 
-            display.update(board.fen(), board_display)
-            sleep(1)
-            print('white MOVE MADE')
-            print(board)
+            # Visualize the board
+            # display.update(board.fen(), board_display)
+
         else:
             # Get output for the white pieces
             output = net2.activate(board_vector)
@@ -55,17 +52,16 @@ def train_ai(genome1, genome2, config):
 
             make_move(board, move)
 
-            print('black MOVE MADE')
-            print(board)
-            display.update(board.fen(), board_display)
-            sleep(1)
+            # Visualize the board
+            # display.update(board.fen(), board_display)
 
         # Get the legal moves for the current player
         legal_moves = list(board.legal_moves)
 
         # If there are no legal moves, the game is over
         if len(legal_moves) == 0:
-            display.terminate()
+            # display.terminate()
+
             break
 
     # Return the winner

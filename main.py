@@ -1,16 +1,9 @@
-# This is a sample Python script.
 import os.path
-
-import chess
 import neat
 import neat.activations
 
-from bitboard import board_to_bitboard, board_to_3vector
 from const import *
-from encoder import *
-from fitness import evaluate_population
-from chessboard import display
-from time import sleep
+from controller import evaluate_population
 
 
 def run(config_file):
@@ -26,9 +19,9 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(1))
+    p.add_reporter(neat.Checkpointer(5))
 
-    # Run for up to 300 generations.
+    # Run for up to x generations.
     winner = p.run(evaluate_population, GENERATIONS)
 
     # Display the winning genome.
@@ -38,9 +31,9 @@ def run(config_file):
     print('\nOutput:')
     winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
 
-    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-4')
-    print('here')
-    p.run(evaluate_population, 1)
+    #p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-4')
+
+    #p.run(evaluate_population, 1)
 
 
 # Press the green button in the gutter to run the script.

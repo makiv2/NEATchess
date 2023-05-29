@@ -1,4 +1,3 @@
-from bitboard import board_to_bitboard
 from chesstrainer import train_ai
 
 
@@ -13,12 +12,7 @@ def evaluate_population(genomes, config):
             train_ai(genome1, genome2, config)
 
 
-def calculate_fitness(genome1, genome2, game_info):
-    pass
 
-
-def is_move_legal():
-    pass
 
 
 
